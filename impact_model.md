@@ -18,24 +18,24 @@ Based on a standard enterprise volume of **10 major cross-channel content assets
 ---
 
 ## 2. Visualization of Time Compression
-The following Gantt chart compares the traditional enterprise content lifecycle against the ContentForge automated pipeline.
+The following timeline compares the traditional enterprise content lifecycle against the ContentForge automated pipeline.
 
 ```mermaid
 gantt
     title Content Lifecycle: Manual vs ContentForge
-    dateFormat  D
-    axisFormat  Day %d
+    dateFormat  HH:mm
+    axisFormat  %H
 
-    section Manual Process (7-10 Days)
-    Research & Drafting      :m1, 0, 1d
-    Legal Queue (Wait)       :m2, 1d, 3d
-    Active Compliance Review :m3, 4d, 0.5d
-    Localization Agency      :m4, 4.5d, 2d
-    Manual Distribution      :m5, 6.5d, 0.5d
+    section Manual Process (Typical 7+ Days)
+    Research & Drafting      :crit, m1, 00:00, 8h
+    Legal Queue (Wait)       :m2, after m1, 72h
+    Active Compliance Review :m3, after m2, 12h
+    Localization Agency      :m4, after m3, 48h
+    Manual Distribution      :m5, after m4, 4h
 
-    section ContentForge (< 1 Hour)
-    AI Production & Audit    :a1, 4d, 0.04d
-    Human Sign-off           :a2, 4.04d, 0.01d
+    section ContentForge (Total < 2 Hours)
+    AI Production & Audit    :active, a1, 00:00, 1h
+    Human Sign-off           :a2, after a1, 30m
 ```
 
 ---
