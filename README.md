@@ -46,7 +46,7 @@ We didn't just build one AI; we built a team of specialized agents. Each has its
 ## Getting Started
 
 ### 1. Setup
-You'll need Node.js installed and API keys for **Google Gemini** or **Groq**.
+You'll need Node.js installed and API keys for **Groq**.
 
 ```bash
 git clone https://github.com/manusingh090/ContentForge.git
@@ -58,7 +58,6 @@ npm install
 Copy the `.env.example` to `.env` and add your keys:
 ```env
 PORT=3000
-GEMINI_API_KEY=your_key_here
 GROQ_API_KEY=your_key_here
 ```
 

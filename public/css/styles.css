@@ -1454,7 +1454,7 @@ h1, h2, h3, h4 {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
   padding: 16px;
-  max-height: 300px;
+  max-height: 800px;
   overflow-y: auto;
   margin-bottom: 16px;
   font-size: 0.88rem;

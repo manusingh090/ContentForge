@@ -487,10 +487,15 @@ class ContentForgeApp {
         return; // Don't destroy the input while user is typing
       }
 
-      // Save existing values before re-render
+      // Save existing values and scroll positions before re-render
       const savedFeedback = {};
       const savedEdits = {};
       const savedChecks = [];
+      const savedScrolls = {};
+
+      // Save scroll of the main container
+      const mainScrollTop = container.scrollTop;
+      const mainScrollLeft = container.scrollLeft;
 
       container.querySelectorAll('input[id^="feedback-"]').forEach(input => {
         if (input.value) savedFeedback[input.id] = input.value;
@@ -500,6 +505,11 @@ class ContentForgeApp {
       });
       container.querySelectorAll('.issue-checkbox:checked').forEach(cb => {
         if (cb.id) savedChecks.push(cb.id);
+      });
+
+      // Save scrolls of individual content previews
+      container.querySelectorAll('.approval-content-preview[id]').forEach(el => {
+        savedScrolls[el.id] = el.scrollTop;
       });
 
       const res = await fetch(`${API_BASE}/api/content`);
@@ -542,6 +552,14 @@ class ContentForgeApp {
           const cb = document.getElementById(id);
           if (cb) cb.checked = true;
         });
+
+        // Restore scroll positions
+        container.scrollTop = mainScrollTop;
+        container.scrollLeft = mainScrollLeft;
+        for (const [id, scrollTop] of Object.entries(savedScrolls)) {
+          const el = document.getElementById(id);
+          if (el) el.scrollTop = scrollTop;
+        }
       }
     } catch (err) {
       console.error('Pipeline load error:', err);
@@ -1095,7 +1113,7 @@ class ContentForgeApp {
             ${Object.entries(item.localizedContent).map(([code, lc]) => `
               <div style="margin-bottom:8px;">
                 <strong>${lc.localeName || code}</strong>
-                <div class="approval-content-preview" style="max-height:150px;">${this.escapeHtml(lc.content || '')}</div>
+                <div class="approval-content-preview" style="max-height:400px;">${this.escapeHtml(lc.content || '')}</div>
               </div>
             `).join('')}
           </div>
@@ -1107,7 +1125,7 @@ class ContentForgeApp {
             ${Object.entries(item.publishedContent).map(([ch, data]) => `
               <div style="margin-bottom:8px;">
                 <strong class="modal-channel-title">${cfIcon(this.getChannelIconId(ch), 'icon--xs')} ${ch.charAt(0).toUpperCase() + ch.slice(1)}</strong>
-                <div class="approval-content-preview" style="max-height:150px;">${this.renderChannelPreview(data, ch)}</div>
+                <div class="approval-content-preview" style="max-height:400px;">${this.renderChannelPreview(data, ch)}</div>
               </div>
             `).join('')}
           </div>
