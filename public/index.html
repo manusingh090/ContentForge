@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContentForge — AI Enterprise Content Operations</title>
+  <meta name="description"
+    content="Multi-agent AI system for automated content creation, compliance review, localization, and multi-channel distribution">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <!-- SVG icon sprite (referenced by <use href="#icon-*">) -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="icon-dashboard" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2" />
+        <rect x="14" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2" />
+        <rect x="3" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2" />
+        <rect x="14" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </symbol>
+      <symbol id="icon-sparkles" viewBox="0 0 24 24">
+        <path fill="currentColor" stroke="none"
+          d="M12 2l1.8 5.4h5.7l-4.5 3.6 1.8 5.4L12 13.8 7.2 16.4 9 11 4.5 7.4h5.7z" />
+      </symbol>
+      <symbol id="icon-pipeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="6" cy="6" r="3" />
+        <circle cx="18" cy="18" r="3" />
+        <path d="M6 9v1a4 4 0 004 4h4a4 4 0 014 4v1" />
+      </symbol>
+      <symbol id="icon-library" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 016 17H20" />
+        <path d="M6 5v10" />
+        <path d="M4 6.5A2.5 2.5 0 016 4h14" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 20V10M12 20V4M6 20v-8" />
+      </symbol>
+      <symbol id="icon-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 016 6c0 3.5-3 5.5-3 8H9c0-2.5-3-4.5-3-8a6 6 0 016-6z" />
+        <path d="M9 18h6" />
+        <path d="M10 22h4" />
+      </symbol>
+      <symbol id="icon-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 016 6c0 3.5-3 5.5-3 8H9c0-2.5-3-4.5-3-8a6 6 0 016-6z" />
+        <path d="M9 18h6" />
+        <path d="M10 22h4" />
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="M9 12l2 2 4-4" />
+      </symbol>
+      <symbol id="icon-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h9" />
+        <path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+      </symbol>
+      <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M9 12l2 2 4-4" />
+      </symbol>
+      <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+      </symbol>
+      <symbol id="icon-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 11l18-5v12L3 13v-2z" />
+        <path d="M11.6 16.8a3 3 0 11-5.8-1.6" />
+        <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </symbol>
+      <symbol id="icon-document" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+        <path d="M14 2v6h6" />
+        <path d="M16 13H8M16 17H8M10 9H8" />
+      </symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 4v6h-6" />
+        <path d="M1 20v-6h6" />
+        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </symbol>
+      <symbol id="icon-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" />
+        <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" />
+      </symbol>
+      <symbol id="icon-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+        <path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z" />
+      </symbol>
+      <symbol id="icon-trending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        <polyline points="17 6 23 6 23 12" />
+      </symbol>
+      <symbol id="icon-twitter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
+      </symbol>
+      <symbol id="icon-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" />
+        <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5" />
+      </symbol>
+      <symbol id="icon-revise" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 00-9-9H7.5" />
+        <path d="M4 7V3h4" />
+        <path d="M3 12a9 9 0 009 9h4.5" />
+        <path d="M20 17v4h-4" />
+      </symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v14M5 12h14" />
+      </symbol>
+      <symbol id="icon-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="2" />
+        <path fill="currentColor" stroke="none" d="M10 9l5 3-5 3V9z" />
+      </symbol>
+      <symbol id="icon-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+      </symbol>
+      <symbol id="icon-notes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+        <path d="M14 2v6h6M16 13H8M16 17H8" />
+      </symbol>
+      <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 9v4M12 17h.01" />
+        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+      </symbol>
+      <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 16v-4M12 8h.01" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Animated background particles -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#brandGrad)" stroke-width="2" fill="none" />
+          <path d="M16 8L22 11.5V18.5L16 22L10 18.5V11.5L16 8Z" fill="url(#brandGrad)" />
+          <defs>
+            <linearGradient id="brandGrad" x1="4" y1="2" x2="28" y2="30">
+              <stop stop-color="#818CF8" />
+              <stop offset="1" stop-color="#C084FC" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="brand-text">ContentForge</span>
+    </div>
+
+    <div class="nav-scroll">
+      <div class="nav-section">
+        <span class="nav-label" id="nav-label-ops">Operations</span>
+        <a href="#" class="nav-item active" data-section="dashboard" id="nav-dashboard" title="Dashboard">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-dashboard" />
+            </svg></span>
+          <span class="nav-label-text">Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-section="create" id="nav-create" title="Create Content">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-sparkles" />
+            </svg></span>
+          <span class="nav-label-text">Create Content</span>
+        </a>
+        <a href="#" class="nav-item" data-section="pipeline" id="nav-pipeline" title="Pipeline">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-pipeline" />
+            </svg></span>
+          <span class="nav-label-text">Pipeline</span>
+        </a>
+        <a href="#" class="nav-item" data-section="library" id="nav-library" title="Content Library">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-library" />
+            </svg></span>
+          <span class="nav-label-text">Content Library</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label" id="nav-label-intel">Intelligence</span>
+        <a href="#" class="nav-item" data-section="analytics" id="nav-analytics" title="Analytics">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-chart" />
+            </svg></span>
+          <span class="nav-label-text">Analytics</span>
+        </a>
+        <a href="#" class="nav-item" data-section="intelligence" id="nav-intelligence" title="AI Insights">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-brain" />
+            </svg></span>
+          <span class="nav-label-text">AI Insights</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label" id="nav-label-gov">Governance</span>
+        <a href="#" class="nav-item" data-section="brand" id="nav-brand" title="Brand Monitor">
+          <span class="nav-icon-wrap"><svg class="icon" aria-hidden="true">
+              <use href="#icon-shield" />
+            </svg></span>
+          <span class="nav-label-text">Brand Monitor</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="agent-status-label">AI agents</div>
+      <div class="agent-roster" id="agentRoster" role="list" aria-label="Pipeline agents and roles">
+        <div class="agent-roster-item" data-pipeline-stage="drafting" role="listitem"
+          title="Drafter — writes blogs, social, email, and collateral from your brief">
+          <div class="agent-roster-icon" aria-hidden="true"><svg class="icon icon--xs">
+              <use href="#icon-pencil" />
+            </svg></div>
+          <div class="agent-roster-meta">
+            <span class="agent-roster-name">Drafter</span>
+            <span class="agent-roster-role">Drafts blogs, social & email content</span>
+          </div>
+        </div>
+        <div class="agent-roster-item" data-pipeline-stage="review" role="listitem"
+          title="Compliance reviewer — scores tone, legal risk, and quality">
+          <div class="agent-roster-icon" aria-hidden="true"><svg class="icon icon--xs">
+              <use href="#icon-check-circle" />
+            </svg></div>
+          <div class="agent-roster-meta">
+            <span class="agent-roster-name">Compliance reviewer</span>
+            <span class="agent-roster-role">Scores tone, legal risk & quality</span>
+          </div>
+        </div>
+        <div class="agent-roster-item" data-pipeline-stage="localization" role="listitem"
+          title="Localizer — regional languages and local-market wording">
+          <div class="agent-roster-icon" aria-hidden="true"><svg class="icon icon--xs">
+              <use href="#icon-globe" />
+            </svg></div>
+          <div class="agent-roster-meta">
+            <span class="agent-roster-name">Localizer</span>
+            <span class="agent-roster-role">Adapts copy into Indian regional languages</span>
+          </div>
+        </div>
+        <div class="agent-roster-item" data-pipeline-stage="publishing" role="listitem"
+          title="Publisher — formats content for X, LinkedIn, blog, email, etc.">
+          <div class="agent-roster-icon" aria-hidden="true"><svg class="icon icon--xs">
+              <use href="#icon-megaphone" />
+            </svg></div>
+          <div class="agent-roster-meta">
+            <span class="agent-roster-name">Publisher</span>
+            <span class="agent-roster-role">Formats content per channel</span>
+          </div>
+        </div>
+        <div class="agent-roster-item" data-pipeline-stage="intelligence" role="listitem"
+          title="Intelligence — analyzes engagement and suggests strategy">
+          <div class="agent-roster-icon" aria-hidden="true"><svg class="icon icon--xs">
+              <use href="#icon-activity" />
+            </svg></div>
+          <div class="agent-roster-meta">
+            <span class="agent-roster-name">Intelligence</span>
+            <span class="agent-roster-role">Analyzes engagement & strategy</span>
+          </div>
+        </div>
+      </div>
+      <span class="footer-text" id="agentFooterHint">Idle — start a pipeline to see live activity</span>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-content" id="mainContent">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-row">
+        <div class="topbar-left">
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+          <span class="page-subtitle" id="pageSubtitle">Overview of your content operations</span>
+        </div>
+        <div class="topbar-right topbar-actions">
+          <button type="button" class="btn btn-secondary btn-sm theme-toggle" id="themeToggleBtn"
+            onclick="app.toggleTheme()" aria-label="Toggle light or dark theme">
+            <span class="theme-icon-wrap" id="themeIconSun"><svg class="icon icon--md" aria-hidden="true">
+                <use href="#icon-sun" />
+              </svg></span>
+            <span class="theme-icon-wrap" id="themeIconMoon" hidden><svg class="icon icon--md" aria-hidden="true">
+                <use href="#icon-moon" />
+              </svg></span>
+          </button>
+          <div class="cycle-time-badge" id="cycleTimeBadge" onclick="app.showCycleTimeBreakdown()" style="cursor:pointer;" title="Click to see per-item breakdown">
+            <span class="badge-label">Avg Cycle Time</span>
+            <span class="badge-value" id="avgCycleTime">--</span>
+          </div>
+        </div>
+      </div>
+      <div class="agent-work-strip" id="agentWorkStrip" hidden role="status" aria-live="polite">
+        <div class="agent-work-strip-inner">
+          <div class="agent-work-spinner" aria-hidden="true"></div>
+          <p class="agent-work-text" id="agentWorkStripText"></p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="content-section active" id="section-dashboard">
+      <div class="metrics-grid">
+        <div class="metric-card gradient-purple">
+          <div class="metric-icon" aria-hidden="true"><svg class="icon icon--lg">
+              <use href="#icon-pencil" />
+            </svg></div>
+          <div class="metric-info">
+            <span class="metric-value" id="metricCreated">0</span>
+            <span class="metric-label">Content Created</span>
+          </div>
+        </div>
+        <div class="metric-card gradient-green">
+          <div class="metric-icon" aria-hidden="true"><svg class="icon icon--lg">
+              <use href="#icon-check-circle" />
+            </svg></div>
+          <div class="metric-info">
+            <span class="metric-value" id="metricApproved">0</span>
+            <span class="metric-label">Approved</span>
+          </div>
+        </div>
+        <div class="metric-card gradient-amber" onclick="app.showCycleTimeBreakdown()" style="cursor:pointer;" title="Click to see per-item breakdown">
+          <div class="metric-icon" aria-hidden="true"><svg class="icon icon--lg">
+              <use href="#icon-clock" />
+            </svg></div>
+          <div class="metric-info">
+            <span class="metric-value" id="metricCycleTime">--</span>
+            <span class="metric-label">Avg Cycle Time</span>
+          </div>
+        </div>
+        <div class="metric-card gradient-blue">
+          <div class="metric-icon" aria-hidden="true"><svg class="icon icon--lg">
+              <use href="#icon-shield" />
+            </svg></div>
+          <div class="metric-info">
+            <span class="metric-value" id="metricCompliance">--</span>
+            <span class="metric-label">Compliance Score</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card recent-activity">
+          <div class="card-header">
+            <h3>Recent Pipeline Activity</h3>
+          </div>
+          <div class="card-body" id="recentActivity">
+            <div class="empty-state">
+              <span class="empty-icon-wrap" aria-hidden="true"><svg class="icon icon--empty">
+                  <use href="#icon-rocket" />
+                </svg></span>
+              <p>No content created yet. Start by creating your first content piece!</p>
+              <button class="btn btn-primary" onclick="app.navigateTo('create')">Create Content</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card channel-distribution">
+          <div class="card-header">
+            <h3>Channel Distribution</h3>
+          </div>
+          <div class="card-body" id="channelDistribution">
+            <div class="channel-bars">
+              <div class="channel-bar-item">
+                <span class="channel-name">Blog</span>
+                <div class="channel-bar-track">
+                  <div class="channel-bar-fill blog" id="barBlog" style="width:0%"></div>
+                </div>
+                <span class="channel-count" id="countBlog">0</span>
+              </div>
+              <div class="channel-bar-item">
+                <span class="channel-name">Twitter</span>
+                <div class="channel-bar-track">
+                  <div class="channel-bar-fill twitter" id="barTwitter" style="width:0%"></div>
+                </div>
+                <span class="channel-count" id="countTwitter">0</span>
+              </div>
+              <div class="channel-bar-item">
+                <span class="channel-name">LinkedIn</span>
+                <div class="channel-bar-track">
+                  <div class="channel-bar-fill linkedin" id="barLinkedin" style="width:0%"></div>
+                </div>
+                <span class="channel-count" id="countLinkedin">0</span>
+              </div>
+              <div class="channel-bar-item">
+                <span class="channel-name">Email</span>
+                <div class="channel-bar-track">
+                  <div class="channel-bar-fill email" id="barEmail" style="width:0%"></div>
+                </div>
+                <span class="channel-count" id="countEmail">0</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Create Content Section -->
+    <section class="content-section" id="section-create">
+      <div class="create-container">
+        <div class="card create-form-card">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-sparkles" />
+                </svg></span> Content Brief</h3>
+            <span class="card-subtitle">Define your content and let AI agents handle the rest</span>
+          </div>
+          <div class="card-body">
+            <div class="ai-auto-fill-area"
+              style="background: var(--bg-card); padding: 16px; border-radius: 8px; border: 1px dashed var(--primary-light); margin-bottom: 24px;">
+              <div style="display: flex; gap: 12px; align-items: stretch;">
+                <textarea id="aiAutoFillInput"
+                  placeholder="Paste an unstructured request and AI will fill the brief. Example: Nexus 4.0 launch blog, compliance-safe, regional Hindi and Tamil for India."
+                  style="flex: 1; min-height: 48px; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; background: var(--bg-color); color: var(--text-color); resize: none; font-family: inherit; font-size: 0.95rem;"></textarea>
+                <button class="btn btn-primary" onclick="app.magicAutoFill()" id="btnAutoFill"
+                  style="display: flex; align-items: center; justify-content: center; width: 120px;">
+                  <span class="btn-text" id="autoFillText">Auto-Fill</span>
+                  <div class="btn-loader" id="autoFillLoader" style="display:none">
+                    <div class="spinner" style="width: 16px; height: 16px; border-top-color: #fff;"></div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <form id="contentBriefForm">
+              <div class="form-group">
+                <label for="briefTopic">Topic / Subject *</label>
+                <input type="text" id="briefTopic" placeholder="e.g., Product launch announcement for Nexus AI 3.0"
+                  required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="briefFormat">Content Format</label>
+                  <select id="briefFormat">
+                    <option value="blog_post">Blog Post</option>
+                    <option value="social_media">Social Media</option>
+                    <option value="email_newsletter">Email Newsletter</option>
+                    <option value="sales_collateral">Sales Collateral</option>
+                    <option value="press_release">Press Release</option>
+                    <option value="product_launch_sprint">Product Launch Sprint (Blog, Socials, FAQ)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="briefAudience">Target Audience</label>
+                  <select id="briefAudience">
+                    <option value="general business professionals">Business Professionals</option>
+                    <option value="C-suite executives and decision makers">C-Suite Executives</option>
+                    <option value="technical developers and engineers">Technical/Developers</option>
+                    <option value="marketing and sales teams">Marketing/Sales</option>
+                    <option value="general consumers">General Consumers</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="briefTone">Tone</label>
+                  <select id="briefTone">
+                    <option value="professional yet approachable">Professional & Approachable</option>
+                    <option value="formal and authoritative">Formal & Authoritative</option>
+                    <option value="casual and friendly">Casual & Friendly</option>
+                    <option value="inspirational and visionary">Inspirational & Visionary</option>
+                    <option value="data-driven and analytical">Data-Driven & Analytical</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="briefWordCount">Word Count Target</label>
+                  <select id="briefWordCount">
+                    <option value="200-400 words">Short (200-400)</option>
+                    <option value="500-800 words" selected>Medium (500-800)</option>
+                    <option value="1000-1500 words">Long (1000-1500)</option>
+                    <option value="2000+ words">In-depth (2000+)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="briefSupportingDoc" style="display:flex; justify-content:space-between; align-items:center;">
+                  Supporting Document / Product Spec
+                  <button type="button" class="btn" style="padding: 4px 10px; font-size: 0.8rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 4px;" onclick="document.getElementById('fileUploadInput').click();">
+                    📎 Upload File (.pdf, .pptx, .docx, .txt)
+                  </button>
+                </label>
+                <input type="file" id="fileUploadInput" accept=".txt,.pdf,.pptx,.docx" style="display:none;" onchange="app.handleFileUpload(event)">
+                <textarea id="briefSupportingDoc" rows="4" placeholder="Paste your raw product specification, feature list, or supporting context here... OR upload a file."></textarea>
+                <div id="fileUploadLoader" style="display:none; align-items:center; gap:8px; margin-top:6px; font-size:0.85rem; color:var(--text-muted);">
+                  <div class="spinner" style="width:14px; height:14px;"></div> Extracting text from file...
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="briefKeyMessages">Key Messages</label>
+                <textarea id="briefKeyMessages" rows="3" placeholder="Key points to include (one per line)"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="briefInstructions">Additional Instructions</label>
+                <textarea id="briefInstructions" rows="2" placeholder="Any special requirements or context"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Distribution Channels</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" value="blog" checked><span class="choice-icon"
+                      aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-document" />
+                      </svg></span> Blog</label>
+                  <label class="checkbox-label"><input type="checkbox" value="twitter" checked><span class="choice-icon"
+                      aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-twitter" />
+                      </svg></span> X / Twitter</label>
+                  <label class="checkbox-label"><input type="checkbox" value="linkedin" checked><span
+                      class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-briefcase" />
+                      </svg></span> LinkedIn</label>
+                  <label class="checkbox-label"><input type="checkbox" value="email" checked><span class="choice-icon"
+                      aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-mail" />
+                      </svg></span> Email</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Regional localization</label>
+                <p class="form-hint" style="font-size:0.8rem;color:var(--text-muted);margin:-4px 0 10px;">Choose
+                  <strong>regional</strong> languages (local-market wording), not generic “foreign language” textbook
+                  style. BCP-47 codes tie copy to each market.</p>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" value="hi-IN" data-name="Hindi (India)"
+                      data-region="India" checked><span class="choice-icon" aria-hidden="true"><svg
+                        class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Hindi (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="ta-IN" data-name="Tamil (India)"
+                      data-region="India" checked><span class="choice-icon" aria-hidden="true"><svg
+                        class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Tamil (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="te-IN" data-name="Telugu (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Telugu (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="bn-IN" data-name="Bengali (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Bengali (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="mr-IN" data-name="Marathi (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Marathi (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="en-IN" data-name="English (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> English (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="kn-IN" data-name="Kannada (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Kannada (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="gu-IN" data-name="Gujarati (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Gujarati (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="ml-IN" data-name="Malayalam (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Malayalam (India)</label>
+                  <label class="checkbox-label"><input type="checkbox" value="pa-IN" data-name="Punjabi (India)"
+                      data-region="India"><span class="choice-icon" aria-hidden="true"><svg class="icon icon--xs">
+                        <use href="#icon-globe" />
+                      </svg></span> Punjabi (India)</label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" id="startPipelineBtn">
+                <span class="btn-text btn-text-with-icon"><svg class="icon icon--btn" aria-hidden="true">
+                    <use href="#icon-rocket" />
+                  </svg> Start Content Pipeline</span>
+                <div class="btn-loader" style="display:none">
+                  <div class="spinner"></div>
+                  <span>Drafter Agent working...</span>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pipeline Section -->
+    <section class="content-section" id="section-pipeline">
+      <div id="pipelineContainer">
+        <div class="empty-state">
+          <span class="empty-icon-wrap" aria-hidden="true"><svg class="icon icon--empty">
+              <use href="#icon-pipeline" />
+            </svg></span>
+          <p>No active pipelines. Create content to see the pipeline in action.</p>
+          <button class="btn btn-primary" onclick="app.navigateTo('create')">Create Content</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Library Section -->
+    <section class="content-section" id="section-library">
+      <div id="libraryContainer">
+        <div class="empty-state">
+          <span class="empty-icon-wrap" aria-hidden="true"><svg class="icon icon--empty">
+              <use href="#icon-library" />
+            </svg></span>
+          <p>Your content library is empty. Start creating content to build your library.</p>
+          <button class="btn btn-primary" onclick="app.navigateTo('create')">Create Content</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section class="content-section" id="section-analytics">
+      <div class="analytics-container" id="analyticsContainer">
+
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-inbox" />
+                </svg></span> Import analytics</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="form-group"
+              style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+              <label>Select Workspace Content</label>
+              <select id="analyticsContentSelect" onchange="app.onAnalyticsContentChange()">
+                <option value="">General (No specific content)</option>
+              </select>
+            </div>
+
+            <div id="analyticsPlatformArea"
+              style="display:none; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:15px;">
+            </div>
+
+            <div id="analyticsInputArea" style="display:none;">
+              <div id="analyticsSelectedPlatformLabel"
+                style="font-size:0.85rem; font-weight:600; color:var(--accent-indigo); margin-bottom:12px; display:flex; align-items:center; gap:6px;"></div>
+              <div class="form-group" style="display:none;">
+                <select id="analyticsChannel">
+                  <option value="blog">Blog</option>
+                  <option value="twitter">Twitter</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="email">Email</option>
+                  <option value="youtube">YouTube</option>
+                </select>
+              </div>
+              <div class="form-row" style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:14px;">
+                <div class="analytics-input-card">
+                  <label><svg class="icon icon--xs" style="color:var(--accent-indigo);"><use href="#icon-eye"/></svg> Views</label>
+                  <input type="number" id="analyticsViews" min="0" value="0" placeholder="0">
+                </div>
+                <div class="analytics-input-card">
+                  <label><svg class="icon icon--xs" style="color:var(--accent-emerald);"><use href="#icon-cursor"/></svg> Clicks</label>
+                  <input type="number" id="analyticsClicks" min="0" value="0" placeholder="0">
+                </div>
+                <div class="analytics-input-card">
+                  <label><svg class="icon icon--xs" style="color:var(--accent-amber);"><use href="#icon-share"/></svg> Shares</label>
+                  <input type="number" id="analyticsShares" min="0" value="0" placeholder="0">
+                </div>
+                <div class="analytics-input-card">
+                  <label><svg class="icon icon--xs" style="color:var(--accent-rose);"><use href="#icon-lightning"/></svg> Conversions</label>
+                  <input type="number" id="analyticsConversions" min="0" value="0" placeholder="0">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:14px;">
+                <label>Post URL <span style="color:var(--text-muted); font-weight:400;">(optional — paste link to auto-fetch)</span></label>
+                <div style="display:flex; gap:10px;">
+                  <input type="text" id="analyticsLink" placeholder="https://twitter.com/... or leave empty for manual input" style="flex:1;">
+                  <button class="btn btn-secondary btn-sm" onclick="app.submitAnalyticsLink()">Fetch</button>
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="app.submitManualAnalytics()" style="width:100%;">
+                <svg class="icon icon--btn" aria-hidden="true"><use href="#icon-chart"/></svg> Add Performance Data
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-trending" />
+                </svg></span> Content performance</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table class="data-table" style="width:100%; border-collapse:collapse; text-align:left;">
+                <thead>
+                  <tr
+                    style="border-bottom: 1px solid var(--border-color); color:var(--text-secondary); font-size:0.85rem;">
+                    <th style="padding:10px;">Content Title</th>
+                    <th style="padding:10px;">Channel</th>
+                    <th style="padding:10px;">Views</th>
+                    <th style="padding:10px;">Clicks</th>
+                    <th style="padding:10px;">Shares</th>
+                  </tr>
+                </thead>
+                <tbody id="analyticsContentTableBody">
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding:15px; color:var(--text-muted);">No
+                      content-specific data yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-chart" />
+                </svg></span> Channel engagement</h3>
+          </div>
+          <div class="card-body" id="engagementAnalytics">
+            <p class="text-muted">Loading analytics data...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intelligence Section -->
+    <section class="content-section" id="section-intelligence">
+      <div class="intelligence-container">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-brain" />
+                </svg></span> AI content intelligence</h3>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-outline" id="simulatePivotBtn" onclick="app.simulateVideoPivot()"
+                style="border: 1px solid #FF0000; color: #FF0000; background: transparent; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Simulate
+                Video Pivot (4x Data)</button>
+              <button class="btn btn-secondary" id="runIntelligenceBtn" onclick="app.runIntelligenceAnalysis()">
+                Run Analysis
+              </button>
+            </div>
+          </div>
+          <div class="card-body" id="intelligenceResults">
+            <div class="empty-state">
+              <span class="empty-icon-wrap" aria-hidden="true"><svg class="icon icon--empty">
+                  <use href="#icon-brain" />
+                </svg></span>
+              <p>Click "Run Analysis" to let the Intelligence Agent analyze your engagement data and generate strategy
+                recommendations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Monitor Section -->
+    <section class="content-section" id="section-brand">
+      <div class="brand-container">
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-plus" />
+                </svg></span> Add brand guideline</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group" style="display:flex; gap:10px;">
+              <input type="text" id="newBrandGuideline"
+                placeholder="Enter a new tone or style guideline (e.g. Always use exact terminology)" style="flex:1;">
+              <button class="btn btn-primary" onclick="app.submitBrandGuideline()">Add Guideline</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title-with-icon"><span class="card-title-icon" aria-hidden="true"><svg
+                  class="icon icon--title">
+                  <use href="#icon-shield" />
+                </svg></span> Brand governance</h3>
+          </div>
+          <div class="card-body" id="brandRulesContainer">
+            <p class="text-muted">Loading brand guidelines...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContent"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+
+</html>

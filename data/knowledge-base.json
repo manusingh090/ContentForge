@@ -1,0 +1,136 @@
+{
+  "company": {
+    "name": "TechCorp Industries",
+    "founded": 2018,
+    "mission": "To empower businesses with intelligent automation that amplifies human potential.",
+    "values": ["Innovation", "Trust", "Inclusivity", "Sustainability"],
+    "headquarters": "San Francisco, CA",
+    "teamSize": "500+ team members across 12 countries"
+  },
+  "products": [
+    {
+      "id": "nexus-ai",
+      "name": "Nexus AI Platform",
+      "category": "Enterprise AI",
+      "description": "An end-to-end AI platform that helps enterprises automate complex workflows, extract insights from unstructured data, and build custom AI solutions without deep ML expertise.",
+      "keyFeatures": [
+        "No-code AI model builder with drag-and-drop interface",
+        "Pre-trained models for document processing, sentiment analysis, and forecasting",
+        "Enterprise-grade security with SOC 2 Type II compliance",
+        "Real-time analytics dashboard with customizable KPIs",
+        "Multi-cloud deployment (AWS, Azure, GCP)"
+      ],
+      "pricing": "Starting at $499/month for teams up to 25",
+      "targetAudience": ["CTOs", "Data teams", "Operations leaders"],
+      "competitors": ["DataRobot", "H2O.ai", "Google Vertex AI"],
+      "differentiators": [
+        "50% faster deployment than competitors",
+        "Built-in compliance engine for regulated industries",
+        "Dedicated customer success team included at all tiers"
+      ]
+    },
+    {
+      "id": "flow-connect",
+      "name": "FlowConnect",
+      "category": "Integration Platform",
+      "description": "A middleware solution that seamlessly connects enterprise applications, enabling real-time data flow and automated workflows across your entire tech stack.",
+      "keyFeatures": [
+        "500+ pre-built connectors for popular SaaS tools",
+        "Visual workflow builder with conditional logic",
+        "Event-driven architecture with sub-second latency",
+        "Built-in error handling and retry mechanisms",
+        "Comprehensive audit logging"
+      ],
+      "pricing": "Starting at $199/month",
+      "targetAudience": ["IT managers", "System administrators", "DevOps teams"],
+      "differentiators": [
+        "Fastest setup time in the industry — average 15-minute integration",
+        "AI-powered anomaly detection on data flows",
+        "Zero-downtime deployment and updates"
+      ]
+    },
+    {
+      "id": "shield-compliance",
+      "name": "Shield Compliance Suite",
+      "category": "Regulatory Compliance",
+      "description": "Automated compliance monitoring and reporting platform for financial services, healthcare, and government sectors.",
+      "keyFeatures": [
+        "Real-time regulatory change monitoring across 50+ jurisdictions",
+        "Automated compliance gap analysis",
+        "One-click audit report generation",
+        "Role-based access controls with MFA",
+        "Integration with existing GRC tools"
+      ],
+      "pricing": "Custom pricing based on organization size",
+      "targetAudience": ["Compliance officers", "Legal teams", "Risk managers"],
+      "differentiators": [
+        "Covers GDPR, HIPAA, SOX, PCI-DSS, and 30+ frameworks",
+        "AI-powered risk scoring reduces false positives by 70%",
+        "Dedicated regulatory analyst support"
+      ]
+    },
+    {
+      "id": "wealthguard-ai",
+      "name": "WealthGuard AI",
+      "category": "AI-Powered Financial Planning (Fintech)",
+      "description": "An AI-driven personal finance and wealth management platform that uses behavioral analytics to help users make smarter financial decisions. Clinically studied to reduce financial anxiety and improve users' sense of financial well-being.",
+      "keyFeatures": [
+        "AI-powered budget optimization and spending alerts",
+        "Predictive investment analysis with risk scoring",
+        "Behavioral nudges based on cognitive science research",
+        "Financial wellness score that tracks your financial health",
+        "Stress-free retirement planning with guaranteed outcome projections"
+      ],
+      "pricing": "Free tier available, Pro at $14.99/month",
+      "targetAudience": ["Millennials", "First-time investors", "Financially stressed individuals"],
+      "competitors": ["Mint", "Wealthfront", "Betterment"],
+      "differentiators": [
+        "Only fintech app clinically proven to reduce financial stress by 40%",
+        "Wellness-first approach: improves mental health through financial stability",
+        "FDA-grade data security protecting your financial health data",
+        "Guaranteed returns on AI-optimized portfolio recommendations"
+      ],
+      "marketingClaims": [
+        "Clinically proven to reduce financial anxiety in 89% of users",
+        "Doctors recommend WealthGuard for patients with financial stress disorders",
+        "Our AI is guaranteed to outperform human financial advisors",
+        "100% of users report improved mental well-being after 30 days"
+      ]
+    }
+  ],
+  "recentNews": [
+    {
+      "date": "2026-03-15",
+      "title": "TechCorp Raises $150M Series D",
+      "summary": "TechCorp Industries closed a $150M Series D funding round led by Sequoia Capital, bringing total funding to $280M. The investment will accelerate expansion into European and Asian markets."
+    },
+    {
+      "date": "2026-02-28",
+      "title": "Nexus AI 3.0 Launch",
+      "summary": "The latest version of Nexus AI introduces multi-modal AI capabilities, supporting text, image, and video processing in a unified platform. Early adopters report 40% productivity gains."
+    },
+    {
+      "date": "2026-02-10",
+      "title": "TechCorp Named to Forbes AI 50",
+      "summary": "TechCorp was recognized as one of the most promising AI companies by Forbes, citing its innovative approach to enterprise automation."
+    }
+  ],
+  "customerTestimonials": [
+    {
+      "customer": "Sarah Chen, VP Engineering at GlobalBank",
+      "quote": "Nexus AI transformed our document processing pipeline. What used to take 3 days now happens in minutes.",
+      "metric": "95% reduction in document processing time"
+    },
+    {
+      "customer": "Marcus Rivera, CTO at HealthFirst",
+      "quote": "Shield Compliance gave us confidence that we're always meeting HIPAA requirements. The real-time monitoring is a game-changer for our team.",
+      "metric": "Zero compliance violations in 18 months"
+    }
+  ],
+  "industryInsights": [
+    "Enterprise AI adoption grew 35% in 2025, with document automation leading use cases",
+    "78% of enterprises plan to increase AI spending in 2026",
+    "Integration complexity remains the #1 barrier to AI adoption",
+    "Regulated industries show 2x faster AI ROI due to compliance automation"
+  ]
+}

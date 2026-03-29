@@ -1,0 +1,64 @@
+{
+  "tone": {
+    "voice": "professional yet approachable",
+    "personality": ["innovative", "trustworthy", "human-centric"],
+    "formality": "semi-formal",
+    "guidelines": [
+      "Use active voice whenever possible",
+      "Address the reader directly with 'you' and 'your'",
+      "Be concise — avoid jargon unless writing for technical audiences",
+      "Lead with benefits, not features",
+      "Use inclusive, gender-neutral language",
+      "Avoid making unverifiable claims about any product or service"
+    ]
+  },
+  "terminology": {
+    "preferred": {
+      "AI assistant": "Use instead of 'bot' or 'chatbot'",
+      "team members": "Use instead of 'employees' or 'workers'",
+      "customers": "Use instead of 'users' in external content",
+      "solutions": "Use instead of 'products' when referring to service offerings",
+      "intelligent automation": "Use instead of 'AI replacement'",
+      "data-driven insights": "Use instead of 'big data analytics'",
+      "streamline": "Use instead of 'optimize' or 'synergize'",
+      "empower": "Use instead of 'enable' in marketing content"
+    },
+    "banned": [
+      { "term": "cheap", "replacement": "cost-effective", "reason": "Diminishes perceived value" },
+      { "term": "easy", "replacement": "straightforward", "reason": "Can seem dismissive of complexity" },
+      { "term": "revolutionary", "replacement": "transformative", "reason": "Overused, low credibility" },
+      { "term": "synergy", "replacement": "collaboration", "reason": "Corporate cliché" },
+      { "term": "disrupt", "replacement": "transform", "reason": "Negative connotation" },
+      { "term": "leverage", "replacement": "use", "reason": "Jargon" },
+      { "term": "best-in-class", "replacement": "industry-leading", "reason": "Unsubstantiated claim" },
+      { "term": "game-changer", "replacement": "breakthrough", "reason": "Overused buzzword" },
+      { "term": "bleeding edge", "replacement": "cutting-edge", "reason": "Violent imagery" },
+      { "term": "no-brainer", "replacement": "clear choice", "reason": "Informal/dismissive" }
+    ]
+  },
+  "legal": {
+    "requiredDisclaimers": {
+      "financial": "Past performance does not guarantee future results. Investment involves risk.",
+      "health": "This content is for informational purposes only and does not constitute medical advice.",
+      "ai_claims": "AI-powered features may vary in accuracy. Human oversight is recommended for critical decisions.",
+      "data_privacy": "We are committed to protecting your data in accordance with applicable privacy regulations."
+    },
+    "regulatedTerms": [
+      { "term": "guaranteed", "context": "Cannot be used for performance or outcome claims", "severity": "high" },
+      { "term": "free", "context": "Must include terms and conditions if used in offers", "severity": "medium" },
+      { "term": "certified", "context": "Requires verified certification documentation", "severity": "high" },
+      { "term": "FDA approved", "context": "Only for products with actual FDA approval", "severity": "critical" },
+      { "term": "clinically proven", "context": "Requires published clinical study references", "severity": "critical" },
+      { "term": "100%", "context": "Avoid absolute claims unless verifiable", "severity": "medium" },
+      { "term": "doctors recommend", "context": "Requires documented endorsements from licensed practitioners", "severity": "critical" },
+      { "term": "cure", "context": "Cannot claim to cure any condition without evidence", "severity": "critical" },
+      { "term": "risk-free", "context": "No financial or health product is risk-free", "severity": "high" },
+      { "term": "scientifically proven", "context": "Requires peer-reviewed study citations", "severity": "critical" }
+    ],
+    "crossDomainRules": [
+      "A fintech or financial product CANNOT make health or medical claims (e.g., 'reduces anxiety', 'improves mental well-being') without clinical evidence.",
+      "A technology product CANNOT claim regulatory approvals (FDA, CE, etc.) unless actually certified.",
+      "No product may claim guaranteed outcomes, guaranteed returns, or guaranteed results without legal basis."
+    ]
+  }
+}
