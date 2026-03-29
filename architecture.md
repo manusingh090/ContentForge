@@ -134,3 +134,30 @@ ContentForge implements a **Closed-Loop Feedback** system:
 - **Persistent Store**: All state is stored as JSON in `data/content_items.json`. This allows the server to restart at any time without losing the progress of active content pipelines.
 - **Atomic Stage Retries**: If an API call fails (timeout or rate limit), the specific stage is marked as `failed`. The user can "Retry" only that stage without losing progress in others.
 - **Manual Overrides**: Users can bypass AI recommendations at any time, directly editing content to "commit" it as the new ground truth.
+
+---
+
+## 6. Technical Infrastructure & Stack
+
+ContentForge is a modern Node.js-based enterprise application designed for high-throughput AI orchestration and reliable state management.
+
+![ContentForge System Architecture](file:///c:/Users/024ma/OneDrive/Documents/ContentForge/public/images/presentation/architecture.png)
+
+### 1. Unified Ingestion Layer
+The platform utilizes a multi-engine ingestion strategy to transform raw unstructured documents into context-ready text assets for the AI agents.
+- **Multipart Handling**: `multer` handles direct file uploads and stream management.
+- **Portable Document Parsing**: `pdf-parse` extracts text and basic metadata from PDF research files.
+- **Office Document Engine**: `officeparser` provides robust extraction for Word (`.docx`) and PowerPoint (`.pptx`) assets.
+- **Web Intelligence**: `cheerio` enables the system to "read" and scrape external reference URLs provided in the brief.
+
+### 2. High-Inference AI Layer (The Intelligence Cluster)
+ContentForge uses a **Parallel Inference Strategy** to ensure high-speed agent handoffs.
+- **Primary Inference (Groq SDK)**: Utilizes the ultra-low latency Groq Inference API for tactical agent tasks (Drafting, Reviewing).
+- **Secondary/Multimodal (Gemini API)**: Uses Google Gemini (`@google/generative-ai`) for complex content ingestion analysis and large-context reasoning fallbacks.
+- **Client-Side Communication**: `axios` manages the high-velocity HTTP handoffs between the Orchestrator and the external AI Inference Endpoints.
+
+### 3. Resilience & Persistence Layer
+The infrastructure is built on a **Stateless API / Stateful Storage** model.
+- **Static Asset Delivery**: `express.static` serves the frontend dashboard and the interactive presentation deck.
+- **Persistent JSON Store**: Utilizing an atomic write pattern on local JSON files (`data/content_items.json`) ensures that the full state of every content pipeline is recoverable even after a system crash.
+- **UUID State Tracking**: Every content asset, brief, and agent output is indexed with a version 4 UUID for consistent retrieval and auditability.
