@@ -27,6 +27,10 @@ Everything in ContentForge follows a **Pipeline**. Instead of one big "generate"
 
 At any point, you (the human) can step in. If the Reviewer agent says a draft is "too informal," you can see exactly why, edit the text yourself, or tell the AI to try again with better instructions.
 
+### 🏗️ Enterprise Architecture
+
+ContentForge is built on a **Hub-and-Spoke Orchestration Model** to ensure strict compliance and high-quality handoffs. You can find the full technical breakdown in our **[Architecture Documentation](./architecture.md)** and the quantified business value in our **[Impact Model](./impact_model.md)**.
+
 ## Meet your "Agents"
 
 We didn't just build one AI; we built a team of specialized agents. Each has its own "personality" and set of rules:
