@@ -18,20 +18,25 @@ The **Pipeline Orchestrator** (`orchestrator.js`) acts as the single source of t
 ---
 
 ## 2. High-Level Pipeline Workflow
-The ContentForge pipeline is a state-driven automated workflow with mandatory human-in-the-loop (HITL) approval gates at every transition. The following flowchart illustrates the high-level logic and decision branching.
+The ContentForge pipeline is a state-driven, multi-agent engine with strategic feedback loops. The following flowchart illustrates the high-level logic, including the contextual inputs and the recursive Intelligence-to-Brief loop.
 
 ```mermaid
 flowchart TD
+    subgraph Input_Context
+        KB[(Knowledge Base)]
+        BG[(Brand Guidelines)]
+    end
+
     Start([User: Start Pipeline]) --> D[📝 Drafting Stage]
+    KB -.-> D
     D --> D_HITL{Human Review}
     
     D_HITL -- Revision Requested --> D
-    D_HITL -- Rejected --> Stop([Stop Pipeline])
     D_HITL -- Approved --> R[✅ Compliance Review]
+    BG -.-> R
     
     R --> R_HITL{Compliance Review}
     R_HITL -- Revision Requested --> D
-    R_HITL -- Rejected --> Stop
     R_HITL -- Approved --> L[🌐 Localization]
     
     L --> L_HITL{Human Review}
@@ -39,11 +44,15 @@ flowchart TD
     L_HITL -- Approved --> P[📢 Publishing]
     
     P --> P_HITL{Final Review}
-    P_HITL -- Approved --> Distribute([Distribute to Channels])
+    P_HITL -- Approved --> Distribute{Channel Fan-out}
     
-    Distribute --> I[📊 Intelligence Agent]
-    I --> Strategy[Strategy Pivot / New Brief]
-    Strategy -.-> Start
+    Distribute --> LinkedIn[LinkedIn Post]
+    Distribute --> X[X / Twitter Thread]
+    Distribute --> Email[Email Newsletter]
+    Distribute --> Blog[Company Blog]
+    
+    LinkedIn & X & Email & Blog --> I[📊 Intelligence Agent]
+    I -- "Strategic Pivot" --> Start
 ```
 
 ---
@@ -161,3 +170,46 @@ The infrastructure is built on a **Stateless API / Stateful Storage** model.
 - **Static Asset Delivery**: `express.static` serves the frontend dashboard and the interactive presentation deck.
 - **Persistent JSON Store**: Utilizing an atomic write pattern on local JSON files (`data/content_items.json`) ensures that the full state of every content pipeline is recoverable even after a system crash.
 - **UUID State Tracking**: Every content asset, brief, and agent output is indexed with a version 4 UUID for consistent retrieval and auditability.
+
+---
+
+## 7. System Data Lifecycle & Flow Control
+The lifecycle of a single content request follows a rigorous path through the infrastructure layers.
+
+```mermaid
+sequenceDiagram
+    participant UI as Browser UI
+    participant API as Express API
+    participant ING as Ingestion Engine (Multer/PDF)
+    participant ORC as Orchestrator
+    participant AI as AI Inference (Groq/Gemini)
+    participant DB as JSON Data Store
+
+    UI->>API: Post Request (Brief + Files)
+    API->>ING: Parse Multer Streams
+    ING-->>API: Extraction Complete
+    API->>ORC: startPipeline(data)
+    ORC->>DB: createContentItem(uuid)
+    loop Pipeline Execution
+        ORC->>AI: Agent Request (Context + Prompt)
+        AI-->>ORC: Result Result
+        ORC->>DB: schedulePersist()
+        ORC-->>UI: Update Socket State
+    end
+```
+
+---
+
+## 8. State Persistence Architecture
+To maintain enterprise reliability without the overhead of a heavy RDBMS, ContentForge implements a **Fast-Write/Scheduled-Flush** persistence model.
+
+- **In-Memory Cache**: All active pipelines are maintained in a high-speed JavaScript `Map` object for sub-millisecond retrieval.
+- **Scheduled Flush**: Changes are not immediately written to disk (which would be slow during high-concurrency). Instead, a **400ms debounce timer** triggers a `flushPersist()` call that writes the entire state to `data/app-state.json`.
+- **Atomic Reliability**: This ensures that even during a sudden power loss, the system only loses at most 400ms of data, while maintaining the performance of a high-speed in-memory database.
+
+---
+
+## 9. Connectivity & Security Deep-Dive
+- **CORS Management**: The API is configured with strict Cross-Origin Resource Sharing (via the `cors` middleware) to ensure that only authorized front-ends can trigger content pipelines.
+- **Environment Isolation**: Sensitive API keys for Groq and Gemini are managed via `dotenv`, ensuring that architectural secrets are never exposed in the source code or client-side bundles.
+- **Static Shielding**: All static assets are served from the restricted `public/` directory, preventing unauthorized access to the internal `pipeline/` or `agents/` logic files.
